@@ -4,11 +4,11 @@ export default function Footer() {
   return (
     <footer>
       <span>
-        <a href="https://magic.link/docs/auth/overview">Magic Auth Docs</a>
+        <a href="https://magic.link/docs/auth/overview">Magic Auth SDK Docs</a>
       </span>
       <span>
-        <a href="https://web3js.readthedocs.io/en/v1.2.6/index.html">
-          Web3JS Docs
+        <a href="https://docs.ethers.org/v5/">
+          EthersJS Docs
         </a>
       </span>
       <span>

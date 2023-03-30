@@ -3,17 +3,9 @@ import { biconomy } from "../libs/biconomy.js";
 import { greetingsInstance } from "../libs/greetings.js";
 
 export default function Dashboard({ user }) {
-  const [sendAddress, setSendAddress] = useState("");
-  const [amount, setAmount] = useState("");
   const [contractNumber, setContractNumber] = useState("");
   const [lastCaller, setLastCaller] = useState("");
   const [numberInput, setNumberInput] = useState();
-
-  const handleTransactionSubmit = (e) => {
-    e.preventDefault();
-
-    /* enter send gasless transaction logic */
-  };
 
   const handleNumberSubmit = async (e) => {
     e.preventDefault();
@@ -61,28 +53,12 @@ export default function Dashboard({ user }) {
   return (
     <div>
       <h2>Dashboard</h2>
-      <h3>Email</h3>
-      <p>{user.email}</p>
-      <h3>MFA Enabled</h3>
-      <p>{user.isMfaEnabled ? "Enabled" : "Disabled"}</p>
+      <h3>Login Credential</h3>
+      <p>{user.email ? user.email : user.phoneNumber}</p>
       <h3>Wallet Address</h3>
       <p>{user.publicAddress}</p>
-      <h3>Send Transaction</h3>
-      <form onSubmit={handleTransactionSubmit} id="transaction-form">
-        <input
-          placeholder="Receiving Address"
-          value={sendAddress}
-          onChange={(e) => setSendAddress(e.target.value)}
-        />
-        <input
-          placeholder="Amount (ETH)"
-          value={amount}
-          onChange={(e) => setAmount(e.target.value)}
-        />
-        <button type="submit">Send</button>
-      </form>
 
-      <h3>Current Contract Number and Caller</h3>
+      <h3>Most Recent Caller Address & Lucky Number</h3>
       <p>Current Caller: {lastCaller}</p>
       <p>Current Number: {contractNumber}</p>
       <form onSubmit={handleNumberSubmit} id="number-form">
