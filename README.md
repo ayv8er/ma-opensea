@@ -117,7 +117,7 @@ Magic supports the following blockchains outright and can support all EVM chains
 [loginWithEmailOTP](https://magic.link/docs/auth/api-reference/client-side-sdks/web#loginwithemailotp) method is accessible on the magic instance via the [Auth](https://magic.link/docs/auth/api-reference/client-side-sdks/web#auth-module) Module.
 - This promise resolves upon authentication request success to a Decentralized ID token with a default 15-minute lifespan.
 - UI customization is possible by passing in `showUI: false`, more information on how to implement this to come.
-- You can test this login on 
+- You can test this login on the [deployed app](https://ma-opensea.vercel.app/)
 ```javascript
 import { Magic } from 'magic-sdk';
 
@@ -139,7 +139,7 @@ try {
 - UI customization is not possible yet but could be setup to accept `showUI: false` to make this happen.
 - The phone number must be formatted to E.164 standard.
 - Magic currently blocks SMS to certain country codes on the OFAC list or deemed high security risk. [List of blocked country codes](https://magic.link/docs/auth/introduction/faq#questions-around-sms)
-- You can test this login on 
+- You can test this login on the [deployed app](https://ma-opensea.vercel.app/)
 ```javascript
 import { Magic } from 'magic-sdk';
 
