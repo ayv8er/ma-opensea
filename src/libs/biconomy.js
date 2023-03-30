@@ -1,20 +1,15 @@
-import SmartAccount from "@biconomy/smart-account";
-import { ChainId } from "@biconomy/core-types";
-import { getWeb3 } from "./web3";
+import { Biconomy } from "@biconomy/mexa";
+import { magic } from "./magic";
 
-let options = {
-  activeNetworkId: ChainId.GOERLI,
-  networkConfig: [
-    {
-      chainId: ChainId.GOERLI,
-      dappAPIKey: "DdPv0H_QW.68716b42-c788-48d8-a798-d984b5794cf5"
-    }
-  ]
+const buildBiconomy = async () => {
+  const biconomy = new Biconomy(magic.rpcProvider, {
+    apiKey: "DdPv0H_QW.68716b42-c788-48d8-a798-d984b5794cf5",
+    contractAddresses: "0x4ce8ca0005798bbfdbb382bcc57f0fcd17c1a0d9",
+  });
+  await biconomy.init();
+  const provider = biconomy.provider;
+  console.log("biconomy:", biconomy);
+  return provider;
 };
 
-export const buildBiconomySC = async () => {
-  const provider = getWeb3();
-  let smartAccount = new SmartAccount(provider, options);
-  smartAccount = await smartAccount.init();
-  return smartAccount;
-};
+export const biconomyProvider = buildBiconomy();

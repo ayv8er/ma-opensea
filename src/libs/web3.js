@@ -1,6 +1,4 @@
 import Web3 from "web3";
-import { magic } from "./magic";
+import { biconomyProvider } from "./biconomy";
 
-export const getWeb3 = () => {
-  return new Web3(magic.rpcProvider);
-};
+export const web3 = new Web3(biconomyProvider);
