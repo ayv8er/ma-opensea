@@ -9,7 +9,7 @@ import Logout from "./components/Logout";
 import Footer from "./components/Footer";
 
 export default function App() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState();
 
   useEffect(() => {
     // check if user logged in
@@ -21,14 +21,12 @@ export default function App() {
         if (isLoggedIn) {
           magic.user.getMetadata().then((userData) => {
             setUser(userData);
-            // fetchBalance(userData.publicAddress);
           });
         } else {
           setUser({ user: null });
         }
       })
       .catch((err) => {
-        console.log("Error, isLoggedIn():");
         console.error(err);
         magic.user.logout().then(console.log);
         setUser({ user: null });
@@ -49,7 +47,6 @@ export default function App() {
       ) : (
         <Login setUser={setUser} />
       )}
-
       <Footer />
     </div>
   );

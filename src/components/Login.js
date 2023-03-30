@@ -1,15 +1,15 @@
 import { useState } from "react";
 import { magic } from "../libs/magic";
 
-export default function Login() {
+export default function Login({ setUser }) {
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
 
   const handleEmailLogin = async () => {
     try {
-      const did = await magic.auth.loginWithEmailOTP({ email });
-      console.log(did);
-      setEmail("");
+      await magic.auth.loginWithEmailOTP({ email });
+      const metadata = await magic.user.getMetadata();
+      setUser(metadata);
     } catch (err) {
       console.log(err);
     }
@@ -17,9 +17,9 @@ export default function Login() {
 
   const handlePhoneLogin = async () => {
     try {
-      const did = await magic.auth.loginWithSMS({ phoneNumber });
-      console.log(did);
-      setPhoneNumber("");
+      await magic.auth.loginWithSMS({ phoneNumber });
+      const metadata = await magic.user.getMetadata();
+      setUser(metadata);
     } catch (err) {
       console.log(err);
     }

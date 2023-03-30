@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { biconomyProvider } from "../libs/biconomy.js";
+import { biconomy } from "../libs/biconomy.js";
 import { greetingsInstance } from "../libs/greetings.js";
 
 export default function Dashboard({ user }) {
@@ -7,7 +7,7 @@ export default function Dashboard({ user }) {
   const [amount, setAmount] = useState("");
   const [contractNumber, setContractNumber] = useState("");
   const [lastCaller, setLastCaller] = useState("");
-  const [numberInput, setNumberInput] = useState("");
+  const [numberInput, setNumberInput] = useState();
 
   const handleTransactionSubmit = (e) => {
     e.preventDefault();
@@ -17,33 +17,38 @@ export default function Dashboard({ user }) {
 
   const handleNumberSubmit = async (e) => {
     e.preventDefault();
+    try {
+      const provider = biconomy.provider;
+      await biconomy.init();
+      setNumberInput("");
+      const { data } = await greetingsInstance.populateTransaction.updateNumber(
+        Number(numberInput)
+      );
+      let txParams = {
+        data: data,
+        to: "0x4ce8ca0005798bbfdbb382bcc57f0fcd17c1a0d9",
+        from: user.publicAddress,
+        signatureType: "EIP712_SIGN",
+      };
 
-    /* enter gassless contract method logic */
-
-    // Update number in smart contract
-    console.log("greetingsInstance:", greetingsInstance);
-    const { data } = await greetingsInstance.populateTransaction.setGreeting(
-      numberInput
-    );
-
-    let txParams = {
-      data: data,
-      from: user.publicAddress,
-      signatureType: "EIP712_SIGN",
-    };
-
-    await biconomyProvider.send("eth_sendTransaction", [txParams]);
+      provider.send("eth_sendTransaction", [txParams]).then(() => {
+        getNumberFromContract();
+        getLastCallerFromContract();
+      });
+    } catch (err) {
+      console.log("handleNumberSubmit Error.");
+      console.error(err);
+    }
   };
 
   const getNumberFromContract = async () => {
-    const number = await greetingsInstance.methods.getNumber().call();
+    const number = await greetingsInstance.getNumber();
 
-    setContractNumber(number);
-    console.log();
+    setContractNumber(number.toNumber());
   };
 
   const getLastCallerFromContract = async () => {
-    const lastCaller = await greetingsInstance.methods.getLastCaller().call();
+    const lastCaller = await greetingsInstance.getLastCaller();
 
     setLastCaller(lastCaller);
   };
@@ -51,7 +56,7 @@ export default function Dashboard({ user }) {
   useEffect(() => {
     getNumberFromContract();
     getLastCallerFromContract();
-  });
+  }, []);
 
   return (
     <div>
@@ -77,11 +82,13 @@ export default function Dashboard({ user }) {
         <button type="submit">Send</button>
       </form>
 
-      <h3>Current Contract Number</h3>
-      <p>{contractNumber}</p>
+      <h3>Current Contract Number and Caller</h3>
+      <p>Current Caller: {lastCaller}</p>
+      <p>Current Number: {contractNumber}</p>
       <form onSubmit={handleNumberSubmit} id="number-form">
         <input
           placeholder="What's your lucky number?"
+          type="number"
           value={numberInput}
           onChange={(e) => setNumberInput(e.target.value)}
         />
