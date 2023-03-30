@@ -7,6 +7,7 @@
 - `Current Caller` and `Current Number` read from deployed Goerli Smart Contract
 - Submit a "lucky number" to update number and caller in SC, Biconomy SDK used to subsidize gas fees
 
+
 # Magic Auth Client SDK
 
 ### Intro
@@ -42,7 +43,9 @@
 - [Domain Allowlist](https://magic.link/docs/auth/introduction/faq#how-do-i-restrict-which-domains-have-access-to-my-api-key)
 - [Multi-factor Authentication](https://magic.link/docs/auth/login-methods/mfa)
 - [Security Audits & Compliance](https://magic.link/docs/home/security#security-audits-and-compliance)
+- [Magic Admin SDK](#magic-admin-sdk)
 ### Frequently Asked Questions
+- [Errors & Warnings](https://magic.link/docs/auth/api-reference/client-side-sdks/web#errors-warnings)
 - [FAQs](#faqs)
 -------------
 
@@ -114,7 +117,7 @@ Magic supports the following blockchains outright and can support all EVM chains
 [loginWithEmailOTP](https://magic.link/docs/auth/api-reference/client-side-sdks/web#loginwithemailotp) method is accessible on the magic instance via the [Auth](https://magic.link/docs/auth/api-reference/client-side-sdks/web#auth-module) Module.
 - This promise resolves upon authentication request success to a Decentralized ID token with a default 15-minute lifespan.
 - UI customization is possible by passing in `showUI: false`, more information on how to implement this to come.
-- You can test this login on the [deployed app](https://ma-opensea.vercel.app/)
+- You can test this login on 
 ```javascript
 import { Magic } from 'magic-sdk';
 
@@ -136,7 +139,7 @@ try {
 - UI customization is not possible yet but could be setup to accept `showUI: false` to make this happen.
 - The phone number must be formatted to E.164 standard.
 - Magic currently blocks SMS to certain country codes on the OFAC list or deemed high security risk. [List of blocked country codes](https://magic.link/docs/auth/introduction/faq#questions-around-sms)
-- You can test this login on the [deployed app](https://ma-opensea.vercel.app/)
+- You can test this login on 
 ```javascript
 import { Magic } from 'magic-sdk';
 
@@ -312,6 +315,11 @@ try {
   // Handle errors
 }
 ```
+
+## Magic Admin SDK
+[NodeJS API Reference](https://magic.link/docs/auth/api-reference/server-side-sdks/node)
+- DID tokens resolved from [authentication methods](#authentication) or [getIdToken](#get-id-token) can be used to protect your server.
+- Users can be logged out server-side and information you may not want to pass from client to server may be extracted from the DID token in your backend.
 
 ## FAQs
 - [Can I link email addresses and social logins?](https://magic.link/docs/auth/introduction/faq#can-i-link-email-addresses-and-social-logins)
