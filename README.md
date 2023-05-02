@@ -15,7 +15,6 @@
 - [Prerequisites](#prerequisites)
 ### Magic Auth Applications in the Wild
 - [Community Gaming](https://www.communitygaming.io/)
-- [Niftys](https://niftys.com/)
 - [Magic Eden](https://creators.magiceden.io/dashboard)
 - [Oddsjam](https://oddsjam.com/)
 - [laCollection](https://lacollection.io/)
